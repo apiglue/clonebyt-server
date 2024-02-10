@@ -24,6 +24,26 @@ jobs:
             - ~/.gradle/caches
       - store_artifacts:
           path: build/reports
+  build-java:
+    working_directory: ~/project
+    docker:
+      - image: cimg/openjdk:21.0.2
+    steps:
+      - checkout
+      - run: gradlew build --no-daemon
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t marcelo10/clonebyt-server .
+      - run:
+          name: Login to Docker Registry
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - run:
+          name: Push Docker Image
+          command: |
+            docker tag clonebyt-server:latest marcelo10/clonebyt-server:latest
+            docker push marcelo10/clonebyt-server:latest
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
@@ -37,6 +57,9 @@ workflows:
   build-and-test:
     jobs:
       - test-java
+      - build:
+          requires:
+            - build-java
     # - deploy:
     #     requires:
     #       - test-java
