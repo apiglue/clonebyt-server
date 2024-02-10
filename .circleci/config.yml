@@ -41,8 +41,7 @@ jobs:
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - run:
           name: Push Docker Image
-          command: |
-            docker tag clonebyt-server:latest marcelo10/clonebyt-server:latest
+          command:
             docker push marcelo10/clonebyt-server:latest
   deploy:
     # This is an example deploy job, not actually used by the workflow
