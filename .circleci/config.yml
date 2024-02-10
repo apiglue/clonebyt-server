@@ -29,12 +29,6 @@ jobs:
           command: ./gradlew build --no-daemon
       - store_artifacts:
           path: build/libs
-
-  build-docker-image:
-    working_directory: ~/project
-    docker:
-      - image: cimg/base:stable
-    steps:
       - run:
           name: Build Docker Image
           command: |
@@ -61,6 +55,3 @@ workflows:
   test-build-registry:
     jobs:
       - test-build-java
-      - build-docker-image:
-          requires:
-            - test-build-java
