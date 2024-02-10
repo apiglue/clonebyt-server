@@ -8,7 +8,8 @@ group = 'io.apiglue.clonebyt'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '21'
+	sourceCompatibility = '1.8'
+	targetCompatibility = '21'
 }
 
 repositories {
