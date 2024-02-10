@@ -2,7 +2,7 @@
 # Stacks detected: deps:java:.,tool:gradle:
 version: 2.1
 jobs:
-  test-java:
+  test-build-java:
     docker:
       - image: cimg/openjdk:21.0.2
     steps:
@@ -24,17 +24,14 @@ jobs:
             - ~/.gradle/caches
       - store_artifacts:
           path: build/reports
-  build-jar:
-    docker:
-      - image: cimg/openjdk:21.0.2
-    steps:
-      - checkout
-      - run: ./gradlew build --no-daemon
+      - run:
+          name: Building artifacts
+          command: ./gradlew build --no-daemon
       - store_artifacts:
           path: build/libs
 
-  build-docker:
-    #working_directory: ~/project
+  build-docker-image:
+    working_directory: ~/project
     docker:
       - image: cimg/base:stable
     steps:
@@ -61,15 +58,9 @@ jobs:
           name: deploy
           command: '#e.g. ./deploy.sh'
 workflows:
-  build-and-test:
+  test-build-registry:
     jobs:
-      - test-java
-      - build-jar:
+      - test-build-java
+      - build-docker-image:
           requires:
-            - test-java
-      - build-docker:
-          requires:
-            - build-jar
-    # - deploy:
-    #     requires:
-    #       - test-java
+            - test-build-java
