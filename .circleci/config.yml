@@ -24,13 +24,20 @@ jobs:
             - ~/.gradle/caches
       - store_artifacts:
           path: build/reports
-  build:
-    #working_directory: ~/project
+  build-jar:
     docker:
       - image: cimg/openjdk:21.0.2
     steps:
       - checkout
       - run: ./gradlew build --no-daemon
+      - store_artifacts:
+          path: build/libs
+
+  build-docker:
+    #working_directory: ~/project
+    docker:
+      - image: cimg/base:stable
+    steps:
       - run:
           name: Build Docker Image
           command: |
@@ -57,9 +64,12 @@ workflows:
   build-and-test:
     jobs:
       - test-java
-      - build:
+      - build-jar:
           requires:
             - test-java
+      - build-docker:
+          requires:
+            - build-jar
     # - deploy:
     #     requires:
     #       - test-java
