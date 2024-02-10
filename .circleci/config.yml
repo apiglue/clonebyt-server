@@ -24,7 +24,7 @@ jobs:
             - ~/.gradle/caches
       - store_artifacts:
           path: build/reports
-  build-java:
+  build:
     working_directory: ~/project
     docker:
       - image: cimg/openjdk:21.0.2
@@ -59,7 +59,7 @@ workflows:
       - test-java
       - build:
           requires:
-            - build-java
+            - test-java
     # - deploy:
     #     requires:
     #       - test-java
