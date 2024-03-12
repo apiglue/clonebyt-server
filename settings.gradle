@@ -1,1 +1,3 @@
 rootProject.name = 'clonebyt-server'
+include 'integrationTest'
+
