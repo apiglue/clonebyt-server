@@ -11,15 +11,6 @@ java {
 	sourceCompatibility = '21'
 }
 
-sourceSets {
-	integrationTest {
-		java {
-			compileClasspath += main.output + test.output
-			runtimeClasspath += main.output + test.output
-		}
-	}
-}
-
 repositories {
 	mavenCentral()
 }
@@ -32,7 +23,10 @@ configurations {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	compileOnly 'org.projectlombok:lombok:1.18.30'
@@ -43,6 +37,7 @@ dependencies {
 }
 
 test{
+	useJUnitPlatform()
 	jvmArgs('-XX:+EnableDynamicAgentLoading')
 }
 
@@ -50,9 +45,9 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-task integrationTest(type: Test) {
-	description = "Run integration tests"
-	group = "verification"
-	testClassesDirs = sourceSets.integrationTest.output.classesDirs
-	classpath = sourceSets.integrationTest.runtimeClasspath
-}
+//task integrationTest(type: Test) {
+//	description = "Run integration tests"
+//	group = "verification"
+//	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+//	classpath = sourceSets.integrationTest.runtimeClasspath
+//}
