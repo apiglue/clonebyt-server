@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Setter
@@ -15,34 +15,23 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-//    @SequenceGenerator(
-//            name = "message_sequence",
-//            sequenceName = "message_sequence",
-//            allocationSize = 1)
-//    @GeneratedValue(
-//            strategy = GenerationType.SEQUENCE,
-//            generator = "message_sequence"
-//    )
-
     private UUID Id;
     private String content;
-    private Date createdDate;
-    private Date expiryDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime expirationDate = LocalDateTime.now().plusDays(1);
 
     public Message() {
     }
 
-    public Message(UUID id, String content, Date expiryDate) {
+    public Message(UUID id, String content, LocalDateTime expiryDate) {
         Id = id;
         this.content = content;
-        this.createdDate = new Date();
-        this.expiryDate = expiryDate;
+        this.expirationDate = expiryDate;
     }
 
-    public Message(String content, Date expiryDate) {
+    public Message(String content, LocalDateTime expiryDate) {
         this.content = content;
-        this.createdDate = new Date();
-        this.expiryDate = expiryDate;
+        this.expirationDate = expiryDate;
     }
 
     @Override
@@ -51,7 +40,7 @@ public class Message {
                 "Id=" + Id +
                 ", content='" + content + '\'' +
                 ", createdDate=" + createdDate +
-                ", expiryDate=" + expiryDate +
+                ", expiryDate=" + expirationDate +
                 '}';
     }
 }

@@ -4,14 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Configuration
 public class MessageConfig {
     @Bean
     CommandLineRunner commandLineRunner(MessageRepository messageRepository) {
         return args -> {
-            Message message = new Message("Hello, World", new Date(2025, 12, 31));
+            Message message = new Message("Hello, World", LocalDateTime.now().plusYears(1));
             messageRepository.save(message);
         };
     }

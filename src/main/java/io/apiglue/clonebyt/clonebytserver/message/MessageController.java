@@ -1,14 +1,12 @@
 package io.apiglue.clonebyt.clonebytserver.message;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/messages")
 
 public class MessageController {
     private final MessageService messageService;
@@ -18,9 +16,13 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/messages")
+    @GetMapping
     public List<Message> getMessages() {
-
         return messageService.getMessages();
+    }
+
+    @PostMapping
+    public void addNewMessage(@RequestBody Message message) {
+        messageService.addNewMessage(message);
     }
 }
