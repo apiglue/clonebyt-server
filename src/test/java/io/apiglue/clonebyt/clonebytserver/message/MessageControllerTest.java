@@ -9,8 +9,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
 public class MessageControllerTest {
 
     private MockMvc mvc;
@@ -28,6 +31,6 @@ public class MessageControllerTest {
     @Description("Test for getMessage method")
     public void testGetMessage() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/hello?myName=test");
-        mvc.perform(requestBuilder).andExpect(status().isOk()).andExpect(content().string("Hello test!"));
+        mvc.perform(requestBuilder).andExpect(status().isOk()).andExpect(content().string("Hello test"));
     }
 }

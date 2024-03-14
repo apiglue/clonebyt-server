@@ -10,3 +10,7 @@ Build image:
 
 Run container:
 `docker run -it -p 8888:8080 marcelo10/io.apiglue.clonebyt-server /bin/bash`
+
+## Sources
+
+https://www.youtube.com/watch?v=9SGDpanrc8U
