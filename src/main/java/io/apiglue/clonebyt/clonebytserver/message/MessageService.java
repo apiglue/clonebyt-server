@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MessageService {
@@ -16,7 +17,11 @@ public class MessageService {
     }
 
     public List<Message> getMessages() {
-        return messageRepository.findAll();
+        return messageRepository.findAllValid();
+    }
+
+    public Message getMessagesById(UUID Id) {
+        return messageRepository.findById(Id).orElse(null);
     }
 
     public void addNewMessage(Message message) {

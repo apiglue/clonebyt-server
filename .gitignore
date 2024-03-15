@@ -170,5 +170,6 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,intellij
 
-bin/
-.idea/copilot/
+bin/!/.idea/copilot/
+!/.idea/copilot/chatSessions/00000000000.xd
+!/.idea/copilot/chatSessions/xd.lck
