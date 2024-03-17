@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'jacoco'
+
 }
 
 group = 'io.apiglue.clonebyt'
@@ -44,6 +46,20 @@ dependencies {
 }
 
 test {
+    finalizedBy 'jacocoTestReport' // report is always generated after tests run
     useJUnitPlatform()
     jvmArgs('-XX:+EnableDynamicAgentLoading')
+
+}
+jacoco {
+    toolVersion = "0.8.9"
+    reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
+}
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+    }
 }
